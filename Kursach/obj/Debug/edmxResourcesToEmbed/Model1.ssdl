@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KursachModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="contract">
+    <Key>
+      <PropertyRef Name="id_contract" />
+    </Key>
+    <Property Name="id_contract" Type="int" Nullable="false" />
+    <Property Name="number_month" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="id_supp" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="product_order">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_contaract" Type="int" />
+    <Property Name="amount" Type="int" />
+    <Property Name="id_raw" Type="int" />
+  </EntityType>
+  <EntityType Name="product_purchase">
+    <Key>
+      <PropertyRef Name="date_of_purchase" />
+    </Key>
+    <Property Name="id_raw" Type="int" Nullable="false" />
+    <Property Name="date_of_purchase" Type="date" Nullable="false" />
+    <Property Name="amount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="product_sales">
+    <Key>
+      <PropertyRef Name="date_of_sales" />
+    </Key>
+    <Property Name="id_raw" Type="int" Nullable="false" />
+    <Property Name="date_of_sales" Type="date" Nullable="false" />
+    <Property Name="amount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="raw">
+    <Key>
+      <PropertyRef Name="id_raw" />
+    </Key>
+    <Property Name="id_raw" Type="int" Nullable="false" />
+    <Property Name="name_raw" Type="char" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sales_invoice">
+    <Key>
+      <PropertyRef Name="id_of_sailing" />
+    </Key>
+    <Property Name="id_workshop" Type="int" />
+    <Property Name="date_of_sale" Type="date" Nullable="false" />
+    <Property Name="id_of_sailing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="supplier">
+    <Key>
+      <PropertyRef Name="id_supp" />
+    </Key>
+    <Property Name="id_supp" Type="int" Nullable="false" />
+    <Property Name="name_supp" Type="char" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_product_order_contract">
+    <End Role="contract" Type="Self.contract" Multiplicity="0..1" />
+    <End Role="product_order" Type="Self.product_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="contract">
+        <PropertyRef Name="id_contract" />
+      </Principal>
+      <Dependent Role="product_order">
+        <PropertyRef Name="id_contaract" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_product_order_raw">
+    <End Role="raw" Type="Self.raw" Multiplicity="0..1" />
+    <End Role="product_order" Type="Self.product_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="raw">
+        <PropertyRef Name="id_raw" />
+      </Principal>
+      <Dependent Role="product_order">
+        <PropertyRef Name="id_raw" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="id_of_raw2">
+    <End Role="raw" Type="Self.raw" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="product_purchase" Type="Self.product_purchase" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="raw">
+        <PropertyRef Name="id_raw" />
+      </Principal>
+      <Dependent Role="product_purchase">
+        <PropertyRef Name="id_raw" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="id_of_raw4">
+    <End Role="raw" Type="Self.raw" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="product_sales" Type="Self.product_sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="raw">
+        <PropertyRef Name="id_raw" />
+      </Principal>
+      <Dependent Role="product_sales">
+        <PropertyRef Name="id_raw" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="id_of_supp">
+    <End Role="supplier" Type="Self.supplier" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="contract" Type="Self.contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="supplier">
+        <PropertyRef Name="id_supp" />
+      </Principal>
+      <Dependent Role="contract">
+        <PropertyRef Name="id_supp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KursachModelStoreContainer">
+    <EntitySet Name="contract" EntityType="Self.contract" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product_order" EntityType="Self.product_order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product_purchase" EntityType="Self.product_purchase" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product_sales" EntityType="Self.product_sales" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="raw" EntityType="Self.raw" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sales_invoice" EntityType="Self.sales_invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_product_order_contract" Association="Self.FK_product_order_contract">
+      <End Role="contract" EntitySet="contract" />
+      <End Role="product_order" EntitySet="product_order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_order_raw" Association="Self.FK_product_order_raw">
+      <End Role="raw" EntitySet="raw" />
+      <End Role="product_order" EntitySet="product_order" />
+    </AssociationSet>
+    <AssociationSet Name="id_of_raw2" Association="Self.id_of_raw2">
+      <End Role="raw" EntitySet="raw" />
+      <End Role="product_purchase" EntitySet="product_purchase" />
+    </AssociationSet>
+    <AssociationSet Name="id_of_raw4" Association="Self.id_of_raw4">
+      <End Role="raw" EntitySet="raw" />
+      <End Role="product_sales" EntitySet="product_sales" />
+    </AssociationSet>
+    <AssociationSet Name="id_of_supp" Association="Self.id_of_supp">
+      <End Role="supplier" EntitySet="supplier" />
+      <End Role="contract" EntitySet="contract" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

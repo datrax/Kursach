@@ -1,0 +1,48 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Kursach.MainWindow"
+        Title="MainWindow" Height="350" Width="525" Loaded="Construct">
+    <Grid>
+        <Grid x:Name="General">
+            <Grid x:Name="OrderGuy">
+                <Grid x:Name="Orders" d:IsHidden="True">
+                    <TextBox x:Name="Order_id" HorizontalAlignment="Left" Height="23" Margin="129,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.323,0.241"/>
+                    <TextBox x:Name="Order_Month" HorizontalAlignment="Left" Height="23" Margin="128,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="Button_Order" Content="Далее" HorizontalAlignment="Left" Margin="95,104,0,0" VerticalAlignment="Top" Width="75" Click="AgreeOrder"/>
+                    <Label Content="Имя поставщика&#xA;" HorizontalAlignment="Left" Margin="15,62,0,0" VerticalAlignment="Top" Width="108" Height="26"/>
+                    <Label Content="Месяц поставки" HorizontalAlignment="Left" Margin="15,35,0,0" VerticalAlignment="Top" Width="108" Height="25"/>
+                    <Label Content="Ноемер договора" HorizontalAlignment="Left" Margin="15,11,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="ComboSupp" HorizontalAlignment="Left" Margin="129,66,0,0" VerticalAlignment="Top" Width="120"/>
+
+                </Grid>
+                <Grid x:Name="OrderList">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="Amount_of_raw" HorizontalAlignment="Left" Height="23" Margin="80,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.282,0.221"/>
+                    <Button x:Name="Button_Order_Next" Content="Далее" HorizontalAlignment="Left" Margin="80,73,0,0" VerticalAlignment="Top" Width="57" Click="Order_Next" Height="22"/>
+                    <Button x:Name="Button_contract_ready" Content="Готово" HorizontalAlignment="Left" Margin="142,73,0,0" VerticalAlignment="Top" Width="58" Click="contract_ready" Height="22"/>
+                    <Label Content="Сыръе" HorizontalAlignment="Left" Margin="20,5,0,0" VerticalAlignment="Top" Width="55" Height="26"/>
+                    <Label x:Name="___No_Name_" Content="Количество" HorizontalAlignment="Left" Margin="5,45,0,0" VerticalAlignment="Top" Width="79" Height="26"/>
+                    <ComboBox x:Name="Combo_raw" HorizontalAlignment="Left" Margin="80,5,0,0" VerticalAlignment="Top" Width="120"/>
+
+                </Grid>
+                <Grid x:Name="Order_Report" d:IsHidden="True">
+                    <Button x:Name="AddOrder1" Content="Создать  отчет и потдвердить" HorizontalAlignment="Left" Margin="26,196,0,0" VerticalAlignment="Top" Width="187" Click="Add_Order_Create_report"/>
+                    <Button x:Name="Button_Agree_order" Content="Потдвердить" HorizontalAlignment="Left" Margin="26,157,0,0" VerticalAlignment="Top" Width="92" Click="Agree_order"/>
+                    <Button x:Name="Button_cancel_order" Content="Отмена" HorizontalAlignment="Left" Margin="133,157,0,0" VerticalAlignment="Top" Width="80" Click="cancel_order"/>
+                    <Label Content="Подтвердите введенную информацию" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.673,1.364"/>
+                    <TextBox x:Name="AgreeText" HorizontalAlignment="Left" Height="111" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+
+                </Grid>
+
+            </Grid>
+            <Grid x:Name="Menu" d:IsHidden="True">
+                <Button x:Name="AddOrder" Content="Добавить договор" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="121" Click="Add_Order"/>
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</Window>
