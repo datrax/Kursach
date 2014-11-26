@@ -37,10 +37,15 @@ namespace Kursach
             List<string> g = new List<string>();
             foreach (supplier t in z)
                 Suppliers_invoice.Items.Add(t.name_supp);
-            Suppliers_invoice.SelectedItem = Suppliers_invoice.Items[0];
+            //Suppliers_invoice.SelectedItem = Suppliers_invoice.Items[0];
         }
         private void agree_purchase(object sender, RoutedEventArgs e)
         {
+            if ((string)Suppliers_invoice.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите поставщика!!!");
+                return;
+            }
             string name_of_supp = Suppliers_invoice.SelectedItem.ToString();
             var z = (from asd in model.supplier
                      where asd.name_supp == name_of_supp
@@ -66,10 +71,15 @@ namespace Kursach
             if (Combo_raw1.Items.Count > 0) Combo_raw1.Items.Clear();
             foreach (raw t in k)
                 Combo_raw1.Items.Add(t.name_raw);
-            Combo_raw1.SelectedItem = Combo_raw1.Items[0];
+            //Combo_raw1.SelectedItem = Combo_raw1.Items[0];
         }
         private void Order_Next_purchase(object sender, RoutedEventArgs e)
         {
+            if ((string)Combo_raw1.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите сырье!!!");
+                return;
+            }
             string raw_name = Combo_raw1.SelectedItem.ToString();
             int am;
             if (!Int32.TryParse(Amount_of_raw1.Text, out am))
@@ -132,7 +142,7 @@ namespace Kursach
             {
                 model.SaveChanges();
                 MessageBox.Show("Запись была успешно добавлена");
-                ShowTable(null, null);
+                ShowClientTable(null, null);
             }
             catch (Exception ex)
             {

@@ -56,10 +56,15 @@ namespace Kursach
             if (Combo_raw2.Items.Count > 0) Combo_raw2.Items.Clear();
             foreach (raw t in k)
                 Combo_raw2.Items.Add(t.name_raw); 
-            Combo_raw2.SelectedItem = Combo_raw2.Items[0];
+           // Combo_raw2.SelectedItem = Combo_raw2.Items[0];
         }
         private void Order_Next_sailing(object sender, RoutedEventArgs e)
         {
+            if ((string)Combo_raw2.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите сырье!!!");
+                return;
+            }
             string raw_name = Combo_raw2.SelectedItem.ToString();
             int am;
             if (!Int32.TryParse(Amount_of_raw2.Text, out am))
@@ -114,7 +119,7 @@ namespace Kursach
             {
                 model.SaveChanges();
                 MessageBox.Show("Запись была успешно добавлена");
-                ShowTable(null, null);
+                ShowClientTable(null, null);
             }
             catch (Exception ex)
             {

@@ -48,13 +48,56 @@ namespace Kursach
             List<string> g = new List<string>();
             foreach (supplier t in z)
                 ComboSupp.Items.Add(t.name_supp);
-            ComboSupp.SelectedItem = ComboSupp.Items[0];
+            //ComboSupp.SelectedItem = ComboSupp.Items[0];
 
         }
 
         private void Construct(object sender, RoutedEventArgs e)
         {
-    
+            Menu.Visibility = System.Windows.Visibility.Visible;
+            Orders.Visibility = System.Windows.Visibility.Hidden;
+            OrderList.Visibility = System.Windows.Visibility.Hidden;
+            Order_Report.Visibility = Visibility.Hidden;
+
+            Raw_insert.Visibility = Visibility.Hidden;
+            Raw_delete.Visibility = Visibility.Hidden;
+            Contract_insert.Visibility = Visibility.Hidden;
+            Contract_delete.Visibility = Visibility.Hidden;
+            Supp_insert.Visibility = Visibility.Hidden;
+            Supp_delete.Visibility = Visibility.Hidden;
+            Product_order_insert.Visibility = Visibility.Hidden;
+            Product_order_delete.Visibility = Visibility.Hidden;
+            Product_purchase_insert.Visibility = Visibility.Hidden;
+            Product_purchase_delete.Visibility = Visibility.Hidden;
+            Product_sales_insert.Visibility = Visibility.Hidden;
+            Product_sales_delete.Visibility = Visibility.Hidden;
+            purchase_invoice_insert.Visibility = Visibility.Hidden;
+            purchase_invoice_delete.Visibility = Visibility.Hidden;
+            sales_invoice_invoice.Visibility = Visibility.Hidden;
+            sales_invoice_delete.Visibility = Visibility.Hidden;
+            Raw_update.Visibility = System.Windows.Visibility.Hidden;
+            Contract_update.Visibility = System.Windows.Visibility.Hidden;
+            Supp_update.Visibility = System.Windows.Visibility.Hidden;
+            Product_order_update.Visibility = System.Windows.Visibility.Hidden;
+            purchase_invoice_update.Visibility = System.Windows.Visibility.Hidden;
+            Product_purchase_update.Visibility = System.Windows.Visibility.Hidden;
+            sales_invoice_update.Visibility = System.Windows.Visibility.Hidden;
+            Product_sales_update.Visibility = System.Windows.Visibility.Hidden;
+            user_insert.Visibility = System.Windows.Visibility.Hidden;
+            user_delete.Visibility = System.Windows.Visibility.Hidden;
+            user_update.Visibility = System.Windows.Visibility.Hidden;
+
+            OrderGuy.Visibility = Visibility.Hidden;
+            ComboTables.Items.Add("Сырье");
+            ComboTables.Items.Add("Поставщик");
+            ComboTables.Items.Add("Договор");
+            ComboTables.Items.Add("Продукция договоров");
+            ComboTables.Items.Add("Приходная накладная");
+            ComboTables.Items.Add("Продукция приходной накладной");
+            ComboTables.Items.Add("Расходная накладная");
+            ComboTables.Items.Add("Продукция расходной накладной");
+            ComboTables.Items.Add("Пользователи");
+    //----------------------
             model = new KursachEntities();
             Tables_Client.Items.Add("Заказы");
             Tables_Client.Items.Add("Приход");
@@ -96,7 +139,11 @@ namespace Kursach
                 MessageBox.Show("Номер должен состоять из цифр!!!");
                 return;
             }
-
+            if ((string)ComboSupp.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите поставщика!!!");
+                return;
+            }
             string name_of_supp = ComboSupp.SelectedItem.ToString();
             var z = (from asd in model.supplier
                      where asd.name_supp == name_of_supp
@@ -128,7 +175,7 @@ namespace Kursach
             if (Combo_raw.Items.Count > 0) Combo_raw.Items.Clear();
             foreach (raw t in k)
                 Combo_raw.Items.Add(t.name_raw);
-            Combo_raw.SelectedItem = Combo_raw.Items[0];
+            //Combo_raw.SelectedItem = Combo_raw.Items[0];
         }
 
 
@@ -155,7 +202,11 @@ namespace Kursach
 
         private void Order_Next(object sender, RoutedEventArgs e)
         {
-
+            if ((string)Combo_raw.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите сырье!!!");
+                return;
+            }
             string raw_name = Combo_raw.SelectedItem.ToString();
             int am;
             if (!Int32.TryParse(Amount_of_raw.Text, out am))
@@ -215,7 +266,7 @@ namespace Kursach
             {
                 model.SaveChanges();
                 MessageBox.Show("Запись была успешно добавлена");
-                ShowTable(null, null);
+                ShowClientTable(null, null);
             }
             catch (Exception ex)
             {
@@ -236,7 +287,7 @@ namespace Kursach
             prod_order.Clear();
         }
 
-        private void ShowTable(object sender, SelectionChangedEventArgs e)
+        private void ShowClientTable(object sender, SelectionChangedEventArgs e)
         {
             int workshop;
             int amount;
@@ -445,7 +496,7 @@ namespace Kursach
 
         private void UpdateTable(object sender, RoutedEventArgs e)
         {
-            ShowTable(null, null);
+            ShowClientTable(null, null);
         }
 
         private void Entering(object sender, RoutedEventArgs e)
@@ -465,14 +516,20 @@ namespace Kursach
                 if (z.First().IsAdmin == 1)
                 {
                     Logining.Visibility = Visibility.Hidden;
-                    /////todo admin
+
+                    General.Visibility = Visibility.Visible;
+                    Admin.Visibility = Visibility.Visible;
+                    Menu.Visibility = Visibility.Hidden;
+                    OrderGuy.Visibility = Visibility.Hidden;
+                    Invoices.Visibility = Visibility.Hidden;
                 }
                 else
                 {
                     Visibiles();
-                    ShowTable(null, null);
+                    ShowClientTable(null, null);
                     Logining.Visibility = Visibility.Hidden;
                     General.Visibility = Visibility.Visible;
+                    Admin.Visibility = Visibility.Hidden;
 
 
                 }
@@ -533,7 +590,7 @@ namespace Kursach
         private void Selected_order(object sender, RoutedEventArgs e)
         {
             MakeReport = true;
-            ShowTable(null, null);
+            ShowClientTable(null, null);
         }
 
 
