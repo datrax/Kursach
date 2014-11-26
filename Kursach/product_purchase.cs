@@ -14,10 +14,12 @@ namespace Kursach
     
     public partial class product_purchase
     {
-        public int id_raw { get; set; }
-        public System.DateTime date_of_purchase { get; set; }
-        public int amount { get; set; }
+        public Nullable<int> id_raw { get; set; }
+        public Nullable<int> amount { get; set; }
+        public Nullable<int> id_of_purchasing { get; set; }
+        public int id { get; set; }
     
+        public virtual purchase_invoice purchase_invoice { get; set; }
         public virtual raw raw { get; set; }
     }
 }

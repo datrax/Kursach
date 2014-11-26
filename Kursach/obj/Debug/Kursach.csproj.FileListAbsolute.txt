@@ -16,3 +16,8 @@ c:\users\datrax\documents\visual studio 2013\Projects\Kursach\Kursach\bin\Debug\
 c:\users\datrax\documents\visual studio 2013\Projects\Kursach\Kursach\bin\Debug\EntityFramework.xml
 c:\users\datrax\documents\visual studio 2013\Projects\Kursach\Kursach\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\datrax\Documents\Visual Studio 2013\Projects\Kursach\Kursach\bin\Debug\itextsharp.dll
+C:\Users\datrax\Documents\Visual Studio 2013\Projects\Kursach\Kursach\obj\Debug\App.baml
+C:\Users\datrax\Documents\Visual Studio 2013\Projects\Kursach\Kursach\obj\Debug\Themes\Brushes.baml
+C:\Users\datrax\Documents\Visual Studio 2013\Projects\Kursach\Kursach\obj\Debug\Themes\Core.baml
+C:\Users\datrax\Documents\Visual Studio 2013\Projects\Kursach\Kursach\obj\Debug\Themes\Icons.baml
+C:\Users\datrax\Documents\Visual Studio 2013\Projects\Kursach\Kursach\obj\Debug\Themes\Core.g.cs

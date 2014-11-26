@@ -12,18 +12,10 @@ namespace Kursach
     using System;
     using System.Collections.Generic;
     
-    public partial class contract
+    public partial class Users
     {
-        public contract()
-        {
-            this.product_order = new HashSet<product_order>();
-        }
-    
-        public int id_contract { get; set; }
-        public Nullable<System.DateTime> number_month { get; set; }
-        public Nullable<int> id_supp { get; set; }
-    
-        public virtual supplier supplier { get; set; }
-        public virtual ICollection<product_order> product_order { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public Nullable<int> IsAdmin { get; set; }
     }
 }

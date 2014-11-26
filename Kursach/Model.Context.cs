@@ -29,9 +29,11 @@ namespace Kursach
         public virtual DbSet<product_order> product_order { get; set; }
         public virtual DbSet<product_purchase> product_purchase { get; set; }
         public virtual DbSet<product_sales> product_sales { get; set; }
+        public virtual DbSet<purchase_invoice> purchase_invoice { get; set; }
         public virtual DbSet<raw> raw { get; set; }
         public virtual DbSet<sales_invoice> sales_invoice { get; set; }
         public virtual DbSet<supplier> supplier { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
     }
 }

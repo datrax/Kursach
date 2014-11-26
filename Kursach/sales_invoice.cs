@@ -14,8 +14,15 @@ namespace Kursach
     
     public partial class sales_invoice
     {
+        public sales_invoice()
+        {
+            this.product_sales = new HashSet<product_sales>();
+        }
+    
         public Nullable<int> id_workshop { get; set; }
         public System.DateTime date_of_sale { get; set; }
         public int id_of_sailing { get; set; }
+    
+        public virtual ICollection<product_sales> product_sales { get; set; }
     }
 }

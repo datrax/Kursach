@@ -19,19 +19,29 @@
   </EntityType>
   <EntityType Name="product_purchase">
     <Key>
-      <PropertyRef Name="date_of_purchase" />
+      <PropertyRef Name="id" />
     </Key>
-    <Property Name="id_raw" Type="int" Nullable="false" />
-    <Property Name="date_of_purchase" Type="date" Nullable="false" />
-    <Property Name="amount" Type="int" Nullable="false" />
+    <Property Name="id_raw" Type="int" />
+    <Property Name="amount" Type="int" />
+    <Property Name="id_of_purchasing" Type="int" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="product_sales">
     <Key>
-      <PropertyRef Name="date_of_sales" />
+      <PropertyRef Name="id" />
     </Key>
-    <Property Name="id_raw" Type="int" Nullable="false" />
-    <Property Name="date_of_sales" Type="date" Nullable="false" />
-    <Property Name="amount" Type="int" Nullable="false" />
+    <Property Name="id_raw" Type="int" />
+    <Property Name="amount" Type="int" />
+    <Property Name="id_of_sailing" Type="int" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="purchase_invoice">
+    <Key>
+      <PropertyRef Name="id_of_purchasing" />
+    </Key>
+    <Property Name="id_of_purchasing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date_of_purchasing" Type="date" />
+    <Property Name="id_of_supp" Type="int" />
   </EntityType>
   <EntityType Name="raw">
     <Key>
@@ -64,6 +74,14 @@
     <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Login" />
+    </Key>
+    <Property Name="Login" Type="nchar" MaxLength="40" Nullable="false" />
+    <Property Name="Password" Type="nchar" MaxLength="40" Nullable="false" />
+    <Property Name="IsAdmin" Type="int" />
   </EntityType>
   <Association Name="FK_contract_supplier">
     <End Role="supplier" Type="Self.supplier" Multiplicity="0..1" />
@@ -101,10 +119,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="id_of_raw2">
-    <End Role="raw" Type="Self.raw" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
+  <Association Name="FK_product_purchase_purchase_invoice">
+    <End Role="purchase_invoice" Type="Self.purchase_invoice" Multiplicity="0..1" />
+    <End Role="product_purchase" Type="Self.product_purchase" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="purchase_invoice">
+        <PropertyRef Name="id_of_purchasing" />
+      </Principal>
+      <Dependent Role="product_purchase">
+        <PropertyRef Name="id_of_purchasing" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_product_purchase_raw">
+    <End Role="raw" Type="Self.raw" Multiplicity="0..1" />
     <End Role="product_purchase" Type="Self.product_purchase" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="raw">
@@ -115,10 +143,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="id_of_raw4">
-    <End Role="raw" Type="Self.raw" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
+  <Association Name="FK_product_sales_raw">
+    <End Role="raw" Type="Self.raw" Multiplicity="0..1" />
     <End Role="product_sales" Type="Self.product_sales" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="raw">
@@ -129,15 +155,29 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_product_sales_sales_invoice">
+    <End Role="sales_invoice" Type="Self.sales_invoice" Multiplicity="0..1" />
+    <End Role="product_sales" Type="Self.product_sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sales_invoice">
+        <PropertyRef Name="id_of_sailing" />
+      </Principal>
+      <Dependent Role="product_sales">
+        <PropertyRef Name="id_of_sailing" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="KursachModelStoreContainer">
     <EntitySet Name="contract" EntityType="Self.contract" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="product_order" EntityType="Self.product_order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="product_purchase" EntityType="Self.product_purchase" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="product_sales" EntityType="Self.product_sales" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="purchase_invoice" EntityType="Self.purchase_invoice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="raw" EntityType="Self.raw" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sales_invoice" EntityType="Self.sales_invoice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_contract_supplier" Association="Self.FK_contract_supplier">
       <End Role="supplier" EntitySet="supplier" />
       <End Role="contract" EntitySet="contract" />
@@ -150,12 +190,20 @@
       <End Role="raw" EntitySet="raw" />
       <End Role="product_order" EntitySet="product_order" />
     </AssociationSet>
-    <AssociationSet Name="id_of_raw2" Association="Self.id_of_raw2">
+    <AssociationSet Name="FK_product_purchase_purchase_invoice" Association="Self.FK_product_purchase_purchase_invoice">
+      <End Role="purchase_invoice" EntitySet="purchase_invoice" />
+      <End Role="product_purchase" EntitySet="product_purchase" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_purchase_raw" Association="Self.FK_product_purchase_raw">
       <End Role="raw" EntitySet="raw" />
       <End Role="product_purchase" EntitySet="product_purchase" />
     </AssociationSet>
-    <AssociationSet Name="id_of_raw4" Association="Self.id_of_raw4">
+    <AssociationSet Name="FK_product_sales_raw" Association="Self.FK_product_sales_raw">
       <End Role="raw" EntitySet="raw" />
+      <End Role="product_sales" EntitySet="product_sales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_sales_sales_invoice" Association="Self.FK_product_sales_sales_invoice">
+      <End Role="sales_invoice" EntitySet="sales_invoice" />
       <End Role="product_sales" EntitySet="product_sales" />
     </AssociationSet>
   </EntityContainer>
